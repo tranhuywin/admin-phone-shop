@@ -8,3 +8,6 @@
     text-decoration: none;
     color: inherit;
 }
+input:focus-visible{
+    outline: none;
+}

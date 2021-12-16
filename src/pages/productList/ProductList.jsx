@@ -16,7 +16,7 @@ export default function ProductList() {
     { field: "id", headerName: "ID", width: 90 },
     {
       field: "product",
-      headerName: "Product",
+      headerName: "Sản phẩm",
       width: 200,
       renderCell: (params) => {
         return (
@@ -27,20 +27,25 @@ export default function ProductList() {
         );
       },
     },
-    { field: "stock", headerName: "Stock", width: 200 },
+    { field: "stock", headerName: "số lượng", width: 140 },
     {
       field: "status",
-      headerName: "Status",
-      width: 120,
+      headerName: "Giá gốc",
+      width: 140,
     },
     {
       field: "price",
-      headerName: "Price",
+      headerName: "giá bán",
+      width: 140,
+    },
+    {
+      field: "price",
+      headerName: "giá khuyến mãi",
       width: 160,
     },
     {
       field: "action",
-      headerName: "Action",
+      headerName: "Hàng động",
       width: 150,
       renderCell: (params) => {
         return (
@@ -60,11 +65,17 @@ export default function ProductList() {
 
   return (
     <div className="productList">
+      <div className="userTitleContainer" style={{paddingBottom: "16px"}}>
+                <h1 className="userTitle">Danh sách sản phẩm</h1>
+                <Link to="/newUser">
+                    <button className="userAddButton">Tạo</button>
+                </Link>
+            </div>
       <DataGrid
         rows={data}
         disableSelectionOnClick
         columns={columns}
-        pageSize={8}
+        pageSize={10}
         checkboxSelection
       />
     </div>

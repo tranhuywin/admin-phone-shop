@@ -13,9 +13,9 @@ export default function User() {
   return (
     <div className="user">
       <div className="userTitleContainer">
-        <h1 className="userTitle">Edit User</h1>
+        <h1 className="userTitle">Chỉnh sửa người dùng</h1>
         <Link to="/newUser">
-          <button className="userAddButton">Create</button>
+          <button className="userAddButton">Tạo</button>
         </Link>
       </div>
       <div className="userContainer">
@@ -28,23 +28,23 @@ export default function User() {
             />
             <div className="userShowTopTitle">
               <span className="userShowUsername">Anna Becker</span>
-              <span className="userShowUserTitle">Software Engineer</span>
+              <span className="userShowUserTitle">admin</span>
             </div>
           </div>
           <div className="userShowBottom">
-            <span className="userShowTitle">Account Details</span>
+            <span className="userShowTitle">Chi tiết tài khoản</span>
             <div className="userShowInfo">
               <PermIdentity className="userShowIcon" />
               <span className="userShowInfoTitle">annabeck99</span>
             </div>
             <div className="userShowInfo">
               <CalendarToday className="userShowIcon" />
-              <span className="userShowInfoTitle">10.12.1999</span>
+              <span className="userShowInfoTitle">10-12-1999</span>
             </div>
-            <span className="userShowTitle">Contact Details</span>
+            <span className="userShowTitle">Liên hệ</span>
             <div className="userShowInfo">
               <PhoneAndroid className="userShowIcon" />
-              <span className="userShowInfoTitle">+1 123 456 67</span>
+              <span className="userShowInfoTitle">+84 123 456 678</span>
             </div>
             <div className="userShowInfo">
               <MailOutline className="userShowIcon" />
@@ -52,30 +52,14 @@ export default function User() {
             </div>
             <div className="userShowInfo">
               <LocationSearching className="userShowIcon" />
-              <span className="userShowInfoTitle">New York | USA</span>
+              <span className="userShowInfoTitle">Thủ Đức, Hồ Chí Minh</span>
             </div>
           </div>
         </div>
         <div className="userUpdate">
-          <span className="userUpdateTitle">Edit</span>
+          <span className="userUpdateTitle">Chỉnh sửa</span>
           <form className="userUpdateForm">
             <div className="userUpdateLeft">
-              <div className="userUpdateItem">
-                <label>Username</label>
-                <input
-                  type="text"
-                  placeholder="annabeck99"
-                  className="userUpdateInput"
-                />
-              </div>
-              <div className="userUpdateItem">
-                <label>Full Name</label>
-                <input
-                  type="text"
-                  placeholder="Anna Becker"
-                  className="userUpdateInput"
-                />
-              </div>
               <div className="userUpdateItem">
                 <label>Email</label>
                 <input
@@ -85,18 +69,34 @@ export default function User() {
                 />
               </div>
               <div className="userUpdateItem">
-                <label>Phone</label>
+                <label>Họ</label>
                 <input
                   type="text"
-                  placeholder="+1 123 456 67"
+                  placeholder="Becker"
                   className="userUpdateInput"
                 />
               </div>
               <div className="userUpdateItem">
-                <label>Address</label>
+                <label>Tên</label>
                 <input
                   type="text"
-                  placeholder="New York | USA"
+                  placeholder="Anna"
+                  className="userUpdateInput"
+                />
+              </div>
+              <div className="userUpdateItem">
+                <label>Số điện thoại</label>
+                <input
+                  type="text"
+                  placeholder="+84 123 456 678"
+                  className="userUpdateInput"
+                />
+              </div>
+              <div className="userUpdateItem">
+                <label>Địa chỉ</label>
+                <input
+                  type="text"
+                  placeholder="Thủ Đức, Hồ Chí Minh"
                   className="userUpdateInput"
                 />
               </div>
@@ -113,7 +113,7 @@ export default function User() {
                 </label>
                 <input type="file" id="file" style={{ display: "none" }} />
               </div>
-              <button className="userUpdateButton">Update</button>
+              <button className="userUpdateButton">Cập nhập</button>
             </div>
           </form>
         </div>
