@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import "./product.css";
 import {
     Publish,
@@ -8,8 +8,19 @@ import {
     Memory,
     ColorLens,
 } from "@material-ui/icons";
+import axios from "axios";
+import { useState, useEffect } from "react";
 
 export default function Product() {
+    const [Product, setProduct] = useState();
+    let { productId } = useParams();
+    useEffect(() => {
+        axios
+            .get("https://twin-shop.herokuapp.com/products/" + productId)
+            .then((res) => {
+                setProduct(res.data);
+            });
+    }, []);
     return (
         <div className="product">
             <div className="productTitleContainer">
@@ -22,11 +33,11 @@ export default function Product() {
                 <div className="productTopLeft">
                     <div className="productInfoTop">
                         <img
-                            src="https://images.pexels.com/photos/7156886/pexels-photo-7156886.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
+                            src={Product?.thumbnail}
                             alt=""
                             className="productInfoImg"
                         />
-                        <span className="productName">IPhone 13 Pro</span>
+                        <span className="productName">{Product?.name}</span>
                     </div>
                     <div className="productInfoBottom">
                         <span className="userShowTitle">Chi tiết sản phẩm</span>
@@ -38,7 +49,9 @@ export default function Product() {
                             >
                                 id:
                             </span>
-                            <span className="productInfoValue">123</span>
+                            <span className="productInfoValue">
+                                {Product?.id}
+                            </span>
                         </div>
 
                         <div className="userShowInfo">
@@ -47,9 +60,11 @@ export default function Product() {
                                 className="productInfoKey"
                                 style={{ margin: "0 12px" }}
                             >
-                                Số lượng:
+                                Tên:
                             </span>
-                            <span className="productInfoValue">1000</span>
+                            <span className="productInfoValue">
+                                {Product?.name}
+                            </span>
                         </div>
 
                         <div className="userShowInfo">
@@ -58,9 +73,11 @@ export default function Product() {
                                 className="productInfoKey"
                                 style={{ margin: "0 12px" }}
                             >
-                                Giá gốc:
+                                Nhãn hiệu:
                             </span>
-                            <span className="productInfoValue">10000</span>
+                            <span className="productInfoValue">
+                                {Product?.brand}
+                            </span>
                         </div>
 
                         <div className="userShowInfo">
@@ -69,9 +86,11 @@ export default function Product() {
                                 className="productInfoKey"
                                 style={{ margin: "0 12px" }}
                             >
-                                Giá bán:
+                                description:
                             </span>
-                            <span className="productInfoValue">10000</span>
+                            <span className="productInfoValue">
+                                {Product?.description}
+                            </span>
                         </div>
 
                         <div className="userShowInfo">
@@ -80,83 +99,131 @@ export default function Product() {
                                 className="productInfoKey"
                                 style={{ margin: "0 12px" }}
                             >
-                                Giá khuyến mãi:
+                                Giá khuyến mãi (sp có giá nhỏ nhất):
                             </span>
-                            <span className="productInfoValue">10000</span>
+                            <span className="productInfoValue">
+                                {Product?.marketPrice}
+                            </span>
                         </div>
 
-                        <span className="userShowTitle">Bộ nhớ điện thoại</span>
                         <div className="userShowInfo">
-                            <Memory className="userShowIcon" />
+                            <Money className="userShowIcon" />
                             <span
                                 className="productInfoKey"
                                 style={{ margin: "0 12px" }}
                             >
-                                RAM:
+                                Giá bán (sp có giá nhỏ nhất):
                             </span>
-                            <span className="productInfoValue">125 GB</span>
-                            <span
-                                className="productInfoKey"
-                                style={{ margin: "0 12px" }}
-                            >
-                                ROM:
+                            <span className="productInfoValue">
+                                {Product?.price}
                             </span>
-                            <span className="productInfoValue">12 GB</span>
-                            <Link to={"/color/1 "}>
-                                <button
-                                    className="productListEdit"
-                                    style={{ margin: "0 12px" }}
-                                >
-                                    Sửa
-                                </button>
-                            </Link>
                         </div>
-                        <span className="userShowTitle">màu phụ kiện</span>
-                        <div className="userShowInfo">
-                            <ColorLens className="userShowIcon" />
-                            <span
-                                className="productInfoKey"
-                                style={{ margin: "0 12px" }}
-                            >
-                                Mã màu:
+
+                        {Product?.memories.length > 0 && (
+                            <span className="userShowTitle">
+                                Bộ nhớ điện thoại
                             </span>
-                            <span className="productInfoValue">#000000</span>
-                            <Link to={"/color/1 "}>
-                                <button
-                                    className="productListEdit"
-                                    style={{ margin: "0 12px" }}
-                                >
-                                    Sửa
-                                </button>
-                            </Link>
-                        </div>
+                        )}
+                        {Product?.memories.length > 0 &&
+                            Product?.memories.map((memory, index) => {
+                                return (
+                                    <div key={index}>
+                                        <div className="userShowInfo">
+                                            <Memory className="userShowIcon" />
+                                            <span
+                                                className="productInfoKey"
+                                                style={{ margin: "0 12px" }}
+                                            >
+                                                RAM:
+                                            </span>
+                                            <span className="productInfoValue">
+                                                {memory.Ram} GB
+                                            </span>
+                                            <span
+                                                className="productInfoKey"
+                                                style={{ margin: "0 12px" }}
+                                            >
+                                                ROM:
+                                            </span>
+                                            <span className="productInfoValue">
+                                                {memory.Rom} GB
+                                            </span>
+                                        </div>
+                                        <div className="userShowInfo">
+                                            {memory.colors.map((color) => {
+                                                return (
+                                                    <Link to={"/color/" + color.id}>
+                                                        <button
+                                                            className="productListEdit"
+                                                            style={{
+                                                                margin: "0 12px",
+                                                            }}
+                                                        >
+                                                            {color.HexRGB}
+                                                        </button>
+                                                    </Link>
+                                                );
+                                            })}
+                                        </div>
+                                    </div>
+                                );
+                            })}
+
+                        {Product?.colorAccessory.length > 0 && (
+                            <span className="userShowTitle">màu phụ kiện</span>
+                        )}
+                        {Product?.colorAccessory.length > 0 &&
+                            Product?.colorAccessory.map((color, index) => {
+                                return (
+                                    <div className="userShowInfo" key={index}>
+                                        <ColorLens className="userShowIcon" />
+                                        <span
+                                            className="productInfoKey"
+                                            style={{ margin: "0 12px" }}
+                                        >
+                                            Mã màu:
+                                        </span>
+                                        <span className="productInfoValue">
+                                            {color.HexRGB}
+                                        </span>
+                                        <Link to={"/color/" + color.id}>
+                                            <button
+                                                className="productListEdit"
+                                                style={{ margin: "0 12px" }}
+                                            >
+                                                Chi tiết
+                                            </button>
+                                        </Link>
+                                    </div>
+                                );
+                            })}
                     </div>
                 </div>
                 <div className="productTopRight">
                     <form className="productForm">
                         <div className="productFormLeft">
-                        <span className="userUpdateTitle">Chỉnh sửa</span>
+                            <span className="userUpdateTitle">Chỉnh sửa</span>
                             <div className="userUpdateItem">
                                 <label>Tên sản phẩm</label>
                                 <input
                                     type="text"
-                                    placeholder="IPhone 13 pro"
+                                    placeholder={Product?.name}
                                     className="userUpdateInput"
                                 />
                             </div>
                             <div className="userUpdateItem">
-                                <label>Số lượng</label>
+                                <label>Nhãn hiệu</label>
                                 <input
                                     type="text"
-                                    placeholder="1000"
+                                    placeholder={Product?.brand}
                                     className="userUpdateInput"
                                 />
                             </div>
                             <div className="userUpdateItem">
-                                <label>Giá gốc</label>
+                                <label>Mô tả</label>
                                 <input
                                     type="text"
-                                    placeholder="1000"
+                                    placeholder={Product?.description}
                                     className="userUpdateInput"
                                 />
                             </div>
@@ -164,7 +231,7 @@ export default function Product() {
                                 <label>Giá bán</label>
                                 <input
                                     type="text"
-                                    placeholder="1000"
+                                    placeholder={Product?.price}
                                     className="userUpdateInput"
                                 />
                             </div>
@@ -172,15 +239,50 @@ export default function Product() {
                                 <label>Giá khuyến mãi</label>
                                 <input
                                     type="text"
-                                    placeholder="1000"
+                                    placeholder={Product?.marketPrice}
                                     className="userUpdateInput"
                                 />
                             </div>
+                            {Product?.memories.length > 0 &&
+                                Product?.memories.map((memory, index) => {
+                                    return (
+                                        <div
+                                            key={index}
+                                            className="userUpdateItem"
+                                            style={{
+                                                display: "flex",
+                                                flexDirection: "row",
+                                            }}
+                                        >
+                                            <div>
+                                                <label>RAM</label>
+                                                <input
+                                                    type="text"
+                                                    placeholder={
+                                                        memory.Ram + " GB"
+                                                    }
+                                                    className="userUpdateInput"
+                                                />
+                                            </div>
+
+                                            <div style={{ margin: "0 20px" }}>
+                                                <label>ROM</label>
+                                                <input
+                                                    type="text"
+                                                    placeholder={
+                                                        memory.Rom + " GB"
+                                                    }
+                                                    className="userUpdateInput"
+                                                />
+                                            </div>
+                                        </div>
+                                    );
+                                })}
                         </div>
                         <div className="productFormRight">
                             <div className="productUpload">
                                 <img
-                                    src="https://images.pexels.com/photos/7156886/pexels-photo-7156886.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
+                                    src={Product?.thumbnail}
                                     alt=""
                                     className="productUploadImg"
                                 />
@@ -193,7 +295,7 @@ export default function Product() {
                                     style={{ display: "none" }}
                                 />
                             </div>
-                            <button className="productButton">Update</button>
+                            <button className="productButton">Cập nhập</button>
                         </div>
                     </form>
                 </div>

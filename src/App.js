@@ -10,6 +10,8 @@ import ProductList from "./pages/productList/ProductList";
 import Product from "./pages/product/Product";
 import NewProduct from "./pages/newProduct/NewProduct";
 import OrderList from "./pages/orderList/OrderList";
+import Color from "./pages/color/Color";
+import Order from "./pages/order/Order";
 
 function App() {
   return (
@@ -43,11 +45,14 @@ function App() {
           <Route path="/orders">
             <OrderList />
           </Route>
-          <Route path="/orders/:ordersId">
-            <Product />
+          <Route path="/order/:ordersId">
+            <Order />
           </Route>
           <Route path="/neworders">
             <NewProduct />
+          </Route>
+          <Route path="/color/:colorsId">
+            <Color />
           </Route>
         </Switch>
       </div>
