@@ -41,13 +41,13 @@ export default function ProductList() {
         { field: "quantity", headerName: "số lượng", width: 140 },
         {
             field: "price",
-            headerName: "giá bán",
-            width: 140,
+            headerName: "giá bán (VND)",
+            width: 170,
         },
         {
             field: "marketPrice",
-            headerName: "giá khuyến mãi",
-            width: 180,
+            headerName: "giá khuyến mãi  (VND)",
+            width: 200,
         },
         {
             field: "action",
