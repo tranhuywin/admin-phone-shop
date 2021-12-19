@@ -12,49 +12,80 @@ import NewProduct from "./pages/newProduct/NewProduct";
 import OrderList from "./pages/orderList/OrderList";
 import Color from "./pages/color/Color";
 import Order from "./pages/order/Order";
+import Login from "./pages/login";
+import Cookies from 'js-cookie';
+import axios from 'axios';
 
 function App() {
+  const isPageLogin = window.location.pathname === "/login";
+
+  const isValidToken = () => {
+    if (!isPageLogin) {
+      const access_token = Cookies.get("access_token");
+      if (access_token) {
+        axios.get("https://twin-shop.herokuapp.com/user/me", {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${access_token}`,
+          }
+        })
+          .then(res => {
+            if(res.statusCode === 401) {
+              window.location.replace("/login");
+            }
+          })
+          .catch(err => {
+            window.location.href = '/login';
+          });
+      }
+    }
+  }
+  isValidToken();
   return (
     <Router>
-      <Topbar />
+      {!isPageLogin && <Topbar />}
       <div className="container">
-        <Sidebar />
+        {!isPageLogin && <Sidebar />}
         <Switch>
-          <Route exact path="/">
-            <Home />
+          <Route exact path="/login">
+            <Login />
           </Route>
-          <Route path="/users">
-            <UserList />
-          </Route>
-          <Route path="/user/:userId">
-            <User />
-          </Route>
-          <Route path="/newUser">
-            <NewUser />
-          </Route>
-          <Route path="/products">
-            <ProductList />
-          </Route>
-          <Route path="/product/:productId">
-            <Product />
-          </Route>
-          <Route path="/newproduct">
-            <NewProduct />
-          </Route>
-          
-          <Route path="/orders">
-            <OrderList />
-          </Route>
-          <Route path="/order/:ordersId">
-            <Order />
-          </Route>
-          <Route path="/neworders">
-            <NewProduct />
-          </Route>
-          <Route path="/color/:colorsId">
-            <Color />
-          </Route>
-        </Switch>
+            <Route exact path="/">
+              <Home />
+            </Route>
+            <Route path="/users">
+              <UserList />
+            </Route>
+            <Route path="/user/:userId">
+              <User />
+            </Route>
+            <Route path="/newUser">
+              <NewUser />
+            </Route>
+            <Route path="/products">
+              <ProductList />
+            </Route>
+            <Route path="/product/:productId">
+              <Product />
+            </Route>
+            <Route path="/newproduct">
+              <NewProduct />
+            </Route>
+
+            <Route path="/orders">
+              <OrderList />
+            </Route>
+            <Route path="/order/:ordersId">
+              <Order />
+            </Route>
+            <Route path="/neworders">
+              <NewProduct />
+
+            </Route>
+            <Route path="/color/:colorsId">
+              <Color />
+            </Route>
+          </Switch>
       </div>
     </Router>
   );
