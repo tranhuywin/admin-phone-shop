@@ -86,7 +86,7 @@ export default function Product() {
                                 className="productInfoKey"
                                 style={{ margin: "0 12px" }}
                             >
-                                description:
+                                Mô tả:
                             </span>
                             <span className="productInfoValue">
                                 {Product?.description}
@@ -118,7 +118,25 @@ export default function Product() {
                                 {Product?.price}
                             </span>
                         </div>
-
+                        <span className="userShowTitle">
+                                Thông số kỹ thuật: 
+                            </span>
+                        {Product?.specifications.length > 0 && Product?.specifications.map((specification, index) => {
+                            return (
+                                <div className="userShowInfo" key={index}>
+                                    <Memory className="userShowIcon" />
+                                    <span
+                                        className="productInfoKey"
+                                        style={{ margin: "0 12px" }}
+                                    >
+                                        {specification.key}:
+                                    </span>
+                                    <span className="productInfoValue">
+                                        {specification.value}
+                                    </span>
+                                </div>
+                            );
+                        })}
                         {Product?.memories.length > 0 && (
                             <span className="userShowTitle">
                                 Bộ nhớ điện thoại
@@ -292,7 +310,7 @@ export default function Product() {
                                 <input
                                     type="file"
                                     id="file"
-                                    style={{ display: "none" }}
+                                    style={{ display: "none"}}
                                 />
                             </div>
                             <button className="productButton">Cập nhập</button>
